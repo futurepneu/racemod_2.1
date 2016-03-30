@@ -93,6 +93,7 @@ cvar_t *cg_touch_lookSens;
 cvar_t *cg_touch_lookInvert;
 cvar_t *cg_touch_lookDecel;
 
+float scr_damagetime_start;
 float scr_damagetime_off;
 
 /*
@@ -326,7 +327,7 @@ void CG_ScreenInit( void )
 	cg_showPlayerNames_barWidth =   trap_Cvar_Get( "cg_showPlayerNames_barWidth", "8", CVAR_ARCHIVE );
 	cg_showTeamMates =	    trap_Cvar_Get( "cg_showTeamMates", "1", CVAR_ARCHIVE );
 
-	cg_showPressedKeys = trap_Cvar_Get( "cg_showPressedKeys", "0", CVAR_ARCHIVE );
+	cg_showPressedKeys = trap_Cvar_Get( "cg_showPressedKeys", "2", CVAR_ARCHIVE );
 	cg_showChasers = trap_Cvar_Get( "cg_showChasers", "1", CVAR_ARCHIVE );
 
 	cg_scoreboardFontFamily = trap_Cvar_Get( "cg_scoreboardFontFamily", DEFAULT_SCOREBOARD_FONT_FAMILY, CVAR_ARCHIVE );

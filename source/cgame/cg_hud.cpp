@@ -187,12 +187,12 @@ static float _getspeed( void )
 
 static int CG_GetSpeed( const void *parameter )
 {
-	return (int)_getspeed();
+	return (int)( _getspeed() + 0.5f ); // racesow - round speed better
 }
 
 static int CG_GetSpeedVertical( const void *parameter )
 {
-	return cg.predictedPlayerState.pmove.velocity[2];
+	return (int)( cg.predictedPlayerState.pmove.velocity[2] + 0.5f ); // racesow - round speed better
 }
 
 static int CG_GetFPS( const void *parameter )
@@ -1318,15 +1318,19 @@ static void CG_DrawWeaponIcons( int x, int y, int offx, int offy, int iw, int ih
 
 	for( i = 0; i < WEAP_TOTAL-1; i++ )
 	{
-		if( CG_IsWeaponInList( WEAP_GUNBLADE + i ) )
+		if( cg.predictedPlayerState.inventory[WEAP_GUNBLADE+i] ||
+			( !GS_InfiniteAmmo() && ( cg.predictedPlayerState.inventory[AMMO_GUNBLADE+i] || cg.predictedPlayerState.inventory[AMMO_WEAK_GUNBLADE+i] ) ) )
 			n++;
 	}
 
 	for( i = j = 0; i < WEAP_TOTAL-1; i++ )
 	{
-		// if player doesnt have this weapon, skip it
-		if( !CG_IsWeaponInList( WEAP_GUNBLADE + i ) )
+		// racesow - only consider ammo count if not infinite ammo
+		// Skip weapon if player doesn't have it
+		if( !cg.predictedPlayerState.inventory[WEAP_GUNBLADE+i] ||
+			( !GS_InfiniteAmmo() && ( !cg.predictedPlayerState.inventory[AMMO_GUNBLADE+i] || !cg.predictedPlayerState.inventory[AMMO_WEAK_GUNBLADE+i] ) ) )
 			continue;
+		// !racesow
 
 		selected_weapon = CG_IsWeaponSelected( WEAP_GUNBLADE+i );
 
@@ -1401,6 +1405,11 @@ static void CG_DrawWeaponAmmos( int x, int y, int offx, int offy, int fontsize, 
 
 	if( !cg_weaponlist || !cg_weaponlist->integer )
 		return;
+
+	// racesow
+	if( GS_InfiniteAmmo() )
+		return;
+	// !racesow
 
 	if( ammotype == 1 )
 		startammo = AMMO_GUNBLADE;

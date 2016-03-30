@@ -823,6 +823,11 @@ static void CG_AddHeadIcon( centity_t *cent )
 	if( cent->ent.renderfx & RF_VIEWERMODEL )
 		return;
 
+	// racesow
+	if( cg_raceGhosts->integer )
+		return;
+	// !racesow
+
 	if( cent->effects & EF_BUSYICON )
 	{
 		iconShader = CG_MediaShader( cgs.media.shaderChatBalloon );
