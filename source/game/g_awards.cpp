@@ -459,7 +459,7 @@ void G_AwardPlayerKilled( edict_t *self, edict_t *inflictor, edict_t *attacker, 
 
 void G_AwardPlayerPickup( edict_t *self, edict_t *item )
 {
-	if( !item )
+	if( !item || GS_RaceGametype() ) // racesow no item timing awards
 		return;
 
 	// MH control

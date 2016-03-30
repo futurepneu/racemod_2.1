@@ -666,7 +666,10 @@ void G_PureModel( const char *model );
 extern game_locals_t game;
 
 #define G_ISGHOSTING( x ) ( ( ( x )->s.modelindex == 0 ) && ( ( x )->r.solid == SOLID_NOT ) )
-#define ISBRUSHMODEL( x ) ( ( ( x > 0 ) && ( (int)x < trap_CM_NumInlineModels() ) ) ? true : false )
+// racesow: fix maps with many models: allows for 50 non-inlane models to load
+// #define ISBRUSHMODEL( x ) ( ( ( x > 0 ) && ( (int)x < trap_CM_NumInlineModels() ) ) ? true : false )
+#define ISBRUSHMODEL( x ) ( ( ( x > 0 ) && ( (int)x < trap_CM_NumInlineModels() ) && ( (int)x < MAX_MODELS - 50 ) ) ? true : false )
+// !racesow
 
 void G_TeleportEffect( edict_t *ent, bool in );
 void G_RespawnEffect( edict_t *ent );
@@ -722,6 +725,7 @@ void SP_trigger_once( edict_t *ent );
 void SP_trigger_multiple( edict_t *ent );
 void SP_trigger_relay( edict_t *ent );
 void SP_trigger_push( edict_t *ent );
+void SP_target_push( edict_t *ent ); // racesow
 void SP_trigger_hurt( edict_t *ent );
 void SP_trigger_key( edict_t *ent );
 void SP_trigger_counter( edict_t *ent );

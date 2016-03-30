@@ -273,7 +273,8 @@ static void SV_SpawnServer( const char *server, bool devmap )
 	Q_snprintfz( sv.configstrings[CS_MAPCHECKSUM], sizeof( sv.configstrings[CS_MAPCHECKSUM] ), "%i", checksum );
 
 	// reserve the first modelIndexes for inline models
-	for( i = 1; i < CM_NumInlineModels( svs.cms ); i++ )
+	// // racesow - allow 50 models to be loaded
+	for( i = 1; ( i < CM_NumInlineModels( svs.cms ) ) && ( i < MAX_MODELS - 50 ); i++ )
 		Q_snprintfz( sv.configstrings[CS_MODELS + i], sizeof( sv.configstrings[CS_MODELS + i] ), "*%i", i );
 
 	// set serverinfo variable

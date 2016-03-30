@@ -241,7 +241,7 @@ extern "C" {
 #define S_PICKUP_HEALTH_SMALL	"sounds/items/health_5"          // pickup health +5
 #define S_PICKUP_HEALTH_MEDIUM	"sounds/items/health_25"         // pickup health +25
 #define S_PICKUP_HEALTH_LARGE	"sounds/items/health_50"         // pickup health +50
-#define S_PICKUP_HEALTH_MEGA	"sounds/items/megahealth"        // pickup megahealth
+#define S_PICKUP_HEALTH_MEGA	"sounds/items/health_25"        // pickup megahealth // changed from "sounds/items/megahealth" for racesow
 
 #define S_PICKUP_ARMOR_GA	"sounds/items/armor_green"       // pickup green armor
 #define S_PICKUP_ARMOR_YA	"sounds/items/armor_yellow"      // pickup yellow armor
@@ -328,7 +328,7 @@ extern "C" {
 
 
 //#define S_PLAYER_FALL_0_to_3		"*fall_%i"					// player fall (height)
-#define S_PLAYER_FALLDEATH	    "*falldeath"             // player falling to his death
+#define S_PLAYER_FALLDEATH	    "*death"             	// player falling to his death //changed from "*falldeath" for racesow
 #define S_PLAYER_PAINS		    "*pain%i"                    // player pain (percent)
 #define S_PLAYER_DEATH		    "*death"
 

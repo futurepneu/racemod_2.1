@@ -141,7 +141,7 @@ spawn_t	spawns[] = {
 	{ "target_position", SP_target_position },
 	{ "target_print", SP_target_print },
 	{ "target_give", SP_target_give },
-	{ "target_push", SP_info_notnull },
+	{ "target_push", SP_target_push }, // racesow - IMHO this entity should actually be in warsow too but isn't... -K1ll
 	{ "target_changelevel", SP_target_changelevel },
 	{ "target_relay", SP_target_relay },
 	{ "target_delay", SP_target_delay },

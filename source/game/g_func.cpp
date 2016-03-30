@@ -816,9 +816,19 @@ static void door_killed( edict_t *self, edict_t *inflictor, edict_t *attacker, i
 {
 	edict_t	*ent;
 
+	// racesow - defrag support: do not trigger if the door was killed
+	if( GS_RaceGametype() )
+	{
+		self->deadflag = DEAD_NO;
+		G_UseTargets( self, inflictor ); // fix for "doorbuttons" trigger targets without opening
+		return;
+	}
+	// !racesow
+
 	for( ent = self->teammaster; ent; ent = ent->teamchain )
 	{
 		ent->health = ent->max_health;
+		self->deadflag = DEAD_NO; // racesow IIRC this is a fix that should be in warsow too but still isn't. - K1ll
 		if( ent->spawnflags & DOOR_DIE_ONCE )
 			ent->takedamage = DAMAGE_NO;
 	}
@@ -1397,6 +1407,13 @@ static void button_wait( edict_t *self )
 
 	G_UseTargets( self, self->activator );
 	self->s.frame = 1;
+	// racesow - use -1 to reset immediately
+	if( self->moveinfo.wait == -1 )
+	{
+		self->nextThink = level.time + 1;
+		self->think = button_return;
+	}
+	// !racesow
 	if( self->moveinfo.wait >= 0 )
 	{
 		self->nextThink = level.time + ( self->moveinfo.wait * 1000 );
@@ -1482,7 +1499,7 @@ void SP_func_button( edict_t *ent )
 		ent->die = button_killed;
 		ent->takedamage = DAMAGE_YES;
 	}
-	else if( !ent->targetname )
+	else // racesow - all buttons without health should be touchable regardless of targetname
 	{
 		ent->touch = button_touch;
 	}
