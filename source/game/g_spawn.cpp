@@ -275,6 +275,13 @@ bool G_CallSpawn( edict_t *ent )
 		return true;
 	}
 
+	// racesow - Give gametype definitions precedence over C ones
+	// see if there's a spawn definition in the gametype scripts
+	ent->scriptSpawned = G_asCallMapEntitySpawnScript( ent->classname, ent );
+	if( ent->scriptSpawned ) {
+		return true; // handled by the script
+	}
+
 	// check normal spawn functions
 	for( s = spawns; s->name; s++ )
 	{
@@ -284,6 +291,7 @@ bool G_CallSpawn( edict_t *ent )
 			return true;
 		}
 	}
+	// !racesow
 
 	// see if there's a spawn definition in the gametype scripts
 	if( G_asCallMapEntitySpawnScript( ent->classname, ent ) )
@@ -969,6 +977,8 @@ void G_InitLevel( char *mapname, char *entities, int entstrlen, unsigned int lev
 	G_Match_LaunchState( MATCH_STATE_WARMUP );
 
 	G_asGarbageCollect( true );
+
+	RS_Init(); // racesow
 }
 
 void G_ResetLevel( void )

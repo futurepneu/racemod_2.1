@@ -180,6 +180,10 @@ typedef struct
 
 	int forceTeamHumans;
 	int forceTeamBots;
+
+	// racesow
+	bool playerInteraction;
+	// !racesow
 } gametype_descriptor_t;
 
 typedef struct

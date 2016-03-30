@@ -1215,6 +1215,10 @@ static const asProperty_t gametypedescr_Properties[] =
 	{ ASLIB_PROPERTY_DECL(uint, forceTeamBots), ASLIB_FOFFSET(gametype_descriptor_t, forceTeamBots) },
 	{ ASLIB_PROPERTY_DECL(bool, disableObituaries), ASLIB_FOFFSET(gametype_descriptor_t, disableObituaries) },
 
+	// racesow
+	{ ASLIB_PROPERTY_DECL(bool, playerInteraction), ASLIB_FOFFSET(gametype_descriptor_t, playerInteraction) },
+	// !racesow
+
 	ASLIB_PROPERTY_NULL
 };
 
@@ -2922,6 +2926,11 @@ static asstring_t *asFunc_LoadFile( asstring_t *path )
 }
 
 // racesow
+static void asFunc_RS_removeProjectiles( edict_t *owner )
+{
+	RS_removeProjectiles( owner );
+}
+
 static bool asFunc_RS_QueryPjState( int playerNum )
 {
 	if( RS_QueryPjState( playerNum ) )
@@ -3335,6 +3344,7 @@ static const asglobfuncs_t asGlobFuncs[] =
 
 	// misc management utils
 	{ "void G_RemoveAllProjectiles()", asFUNCTION(asFunc_G_Match_RemoveAllProjectiles), NULL },
+	{ "void G_RemoveProjectiles( Entity @ )", asFUNCTION(asFunc_RS_removeProjectiles), NULL }, // racesow
 	{ "void G_ResetLevel()", asFUNCTION(asFunc_G_ResetLevel), NULL },
 	{ "void G_RemoveDeadBodies()", asFUNCTION(asFunc_G_Match_FreeBodyQueue), NULL },
 	{ "void G_Items_RespawnByType( uint typeMask, int item_tag, float delay )", asFUNCTION(asFunc_G_Items_RespawnByType), NULL },

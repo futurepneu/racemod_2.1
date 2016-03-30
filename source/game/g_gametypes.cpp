@@ -432,6 +432,10 @@ static void G_Gametype_GENERIC_Init( void )
 
 	level.gametype.mmCompatible = false;
 
+	// racesow
+	level.gametype.playerInteraction = false;
+	// !racesow
+
 	if( GS_Instagib() )
 		level.gametype.spawnpointRadius *= 2;
 
@@ -1796,6 +1800,8 @@ void G_RunGametype( void )
 	G_Match_CheckStateAbort();
 
 	G_UpdateScoreBoardMessages();
+
+	RS_Think(); // racesow
 
 	//check gametype specific rules
 	if( game.asEngine != NULL )

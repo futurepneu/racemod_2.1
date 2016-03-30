@@ -392,6 +392,9 @@ void G_Shutdown( void )
 
 	G_Printf( "==== G_Shutdown ====\n" );
 
+	// racesow
+	RS_Shutdown();
+
 	GT_asCallShutdown();
 	G_asCallMapExit();
 

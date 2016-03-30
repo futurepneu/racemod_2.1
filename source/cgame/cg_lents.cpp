@@ -823,6 +823,11 @@ static void CG_ProjectileFireTrail( centity_t *cent )
 	{
 		cent->localEffects[LOCALEFFECT_ROCKETFIRE_LAST_DROP] = cg.time;
 
+		// racesow
+		if( cg_raceGhosts->integer && (unsigned int)cent->current.ownerNum != cg.predictedPlayerState.POVnum )
+			alpha *= cg_raceGhostsAlpha->value;
+		// !racesow
+
 		clamp( alpha, 0.0f, 1.0f );
 		le = CG_AllocSprite( LE_INVERSESCALE_ALPHA_FADE, cent->trailOrigin, radius, 4,
 			1.0f, 1.0f, 1.0f, alpha,
@@ -875,6 +880,11 @@ void CG_ProjectileTrail( centity_t *cent )
 			radius = 3 + crandom();
 			alpha = 1.0f;
 		}
+
+		// racesow
+		if( cg_raceGhosts->integer && (unsigned int)cent->current.ownerNum != cg.predictedPlayerState.POVnum )
+			alpha *= cg_raceGhostsAlpha->value;
+		// !racesow
 
 		clamp( alpha, 0.0f, 1.0f );
 		le = CG_AllocSprite( LE_PUFF_SHRINK, cent->trailOrigin, radius, 20, 

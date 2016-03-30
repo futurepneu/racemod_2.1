@@ -101,6 +101,7 @@ bool Pickup_Weapon( edict_t *other, const gsitem_t *item, int flags, int ammo_co
 	}
 
 	other->r.client->ps.inventory[item->tag]++;
+	G_AddPlayerStateEvent( other->r.client, PSEV_PICKUP, ( item->flags & IT_WEAPON ? item->tag : 0 ) ); // racesow - trigger autoswitch
 
 	// never allow the player to carry more than 2 copies of the same weapon
 	if( other->r.client->ps.inventory[item->tag] > item->inventory_max )
@@ -222,7 +223,7 @@ static void G_ProjectileDistancePrestep( edict_t *projectile, float distance )
 
 	// ffs : hack for the plasmagun
 #ifdef PLASMAHACK
-	if( projectile->s.type == ET_PLASMA )
+	if( projectile->s.type == ET_PLASMA && rs_plasma_hack->integer ) // racesow
 		W_Plasma_Backtrace( projectile, plasma_hack_start );
 #endif
 }
@@ -707,6 +708,7 @@ void G_FireWeapon( edict_t *ent, int parm )
 	vec3_t origin, angles;
 	vec3_t viewoffset = { 0, 0, 0 };
 	int ucmdSeed;
+	float prestep; // racesow
 
 	weapondef = GS_GetWeaponDef( ( parm & ~EV_INVERSE ) );
 	firedef = ( parm & EV_INVERSE ) ? &weapondef->firedef : &weapondef->firedef_weak;
@@ -727,6 +729,7 @@ void G_FireWeapon( edict_t *ent, int parm )
 	}
 
 	VectorAdd( ent->s.origin, viewoffset, origin );
+	prestep = g_projectile_prestep->value; // racesow
 
 
 	// shoot 
@@ -756,13 +759,25 @@ void G_FireWeapon( edict_t *ent, int parm )
 
 	case WEAP_GRENADELAUNCHER:
 		projectile = G_Fire_Grenade( origin, angles, firedef, ent, ucmdSeed );
+		// racesow - racesow 0.42 had grenade prestep 24
+		if( GS_RaceGametype() )
+			prestep = rs_grenade_prestep->integer;
+		// !racesow
 		break;
 
 	case WEAP_ROCKETLAUNCHER:
 		projectile = G_Fire_Rocket( origin, angles, firedef, ent, ucmdSeed );
+		// racesow - racesow 0.42 had rocket prestep 0
+		if( GS_RaceGametype() )
+			prestep = rs_rocket_prestep->integer;
+		// !racesow
 		break;
 	case WEAP_PLASMAGUN:
 		projectile = G_Fire_Plasma( origin, angles, firedef, ent, ucmdSeed );
+		// racesow - racesow 0.42 had plasma prestep 32
+		if( GS_RaceGametype() )
+			prestep = rs_plasma_prestep->integer;
+		// !racesow
 		break;
 
 	case WEAP_LASERGUN:
@@ -787,12 +802,17 @@ void G_FireWeapon( edict_t *ent, int parm )
 		//if( projectile->s.linearProjectile ) // convert distance to time for linear projectiles
 		//	G_ProjectileTimePrestep( projectile, 1000.0f * ( g_projectile_prestep->value / VectorLengthFast( projectile->velocity ) ) );
 		//else
-			G_ProjectileDistancePrestep( projectile, g_projectile_prestep->value );
+			G_ProjectileDistancePrestep( projectile, prestep ); // racesow - use our prestep
 	}
+
+	// racesow - enable no_antilag skipping if rs_rocket_antilag is 1
+	if( GS_RaceGametype() && ( ( rs_rocket_antilag->integer && projectile->s.type == ET_ROCKET ) ) )
+		return;
+	// !racesow
 
 #ifdef NO_ROCKET_ANTILAG
 	// hack for disabling antilag on rockets
-	if( projectile && projectile->s.type == ET_ROCKET )
+	if( projectile && ( projectile->s.type == ET_ROCKET || projectile->s.type == ET_PLASMA ) ) // racesow - disable plasma too
 	{
 		int timeOffset;
 
