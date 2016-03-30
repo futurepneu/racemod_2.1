@@ -1670,7 +1670,7 @@ static void PM_SnapPosition( void )
 
 	// go back to the last position
 	VectorCopy( pml.previous_origin, pm->playerState->pmove.origin );
-	VectorClear( pm->playerState->pmove.velocity );
+	//VectorClear( pm->playerState->pmove.velocity //racemod_2.1 - commented out for experimental "wallstrafe stuck" fix
 }
 
 
