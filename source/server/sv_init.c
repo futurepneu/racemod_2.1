@@ -246,6 +246,7 @@ static void SV_SpawnServer( const char *server, bool devmap )
 	if( devmap )
 		Cvar_ForceSet( "sv_cheats", "1" );
 	Cvar_FixCheatVars();
+	Cvar_ForceSet( "rs_prevmap", sv.mapname );  // racesow
 
 	Com_Printf( "------- Server Initialization -------\n" );
 	Com_Printf( "SpawnServer: %s\n", server );

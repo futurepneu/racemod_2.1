@@ -157,3 +157,12 @@ void RS_SplashFrac( const vec3_t origin, const vec3_t mins, const vec3_t maxs, c
 	VectorSubtract( boxcenter, point, pushdir );
 	VectorNormalizeFast( pushdir );
 }
+
+/**
+ * Print previous mapname for a player
+ */
+void RS_Cmd_Prevmap_f( edict_t *ent )
+{
+	cvar_t *prevmap = trap_Cvar_Get( "rs_prevmap", "", CVAR_ARCHIVE );
+	G_PrintMsg( ent, prevmap->string );
+}
