@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __GS_PUBLIC_H
 
 #include "gs_ref.h"
+#include "gs_racesow.h" // racesow
 
 // shared callbacks
 

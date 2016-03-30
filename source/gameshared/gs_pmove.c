@@ -795,6 +795,12 @@ static void PM_Move( void )
 		else
 			pml.velocity[2] -= pm->playerState->pmove.gravity * pml.frametime;
 
+		// racesow - if player is walking: clear prejump counters
+		float hspeed = VectorLengthFast( tv( pml.velocity[0], pml.velocity[1], 0 ) );
+		if( hspeed < DEFAULT_PLAYERSPEED_RACE + 5.0f )
+			RS_ResetPjState( pm->playerState->playerNum );
+		// !racesow
+
 		if( !pml.velocity[0] && !pml.velocity[1] )
 			return;
 
@@ -1073,11 +1079,13 @@ static void PM_CheckJump( void )
 	{
 		module_PredictedEvent( pm->playerState->POVnum, EV_JUMP, 0 );
 		pml.velocity[2] += pml.jumpPlayerSpeed;
+		RS_IncrementJumps( pm->playerState->playerNum ); // racesow - pjcount
 	}
 	else
 	{
 		module_PredictedEvent( pm->playerState->POVnum, EV_JUMP, 0 );
 		pml.velocity[2] = pml.jumpPlayerSpeed;
+		RS_IncrementJumps( pm->playerState->playerNum ); // racesow - pjcount
 	}
 
 	// remove wj count
@@ -1170,6 +1178,8 @@ static void PM_CheckDash( void )
 		{
 			module_PredictedEvent( pm->playerState->POVnum, EV_DASH, 0 );
 		}
+
+		RS_IncrementDashes( pm->playerState->playerNum ); // racesow - pjcount
 	}
 	else if( pm->groundentity == -1 )
 		pm->playerState->pmove.pm_flags &= ~PMF_DASHING;
@@ -1291,6 +1301,7 @@ static void PM_CheckWallJump( void )
 
 					// Create the event
 					module_PredictedEvent( pm->playerState->POVnum, EV_WALLJUMP, DirToByte( normal ) );
+					RS_IncrementWallJumps( pm->playerState->playerNum ); // racesow - pjcount
 				}
 			}
 		}

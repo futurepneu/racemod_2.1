@@ -2921,6 +2921,21 @@ static asstring_t *asFunc_LoadFile( asstring_t *path )
 	return data;
 }
 
+// racesow
+static bool asFunc_RS_QueryPjState( int playerNum )
+{
+	if( RS_QueryPjState( playerNum ) )
+		return true;
+	return false;
+}
+
+static bool asFunc_RS_ResetPjState( int playerNum )
+{
+	RS_ResetPjState( playerNum );
+	return true;
+}
+// !racesow
+
 static int asFunc_FileLength( asstring_t *path )
 {
 	if( !path || !path->len )
@@ -3302,6 +3317,11 @@ static int asFunc_G_GetDefaultColorCorrection( void )
 
 static const asglobfuncs_t asGlobFuncs[] =
 {
+	// racesow
+	{ "bool RS_QueryPjState( int playerNum )", asFUNCTION(asFunc_RS_QueryPjState), NULL },
+	{ "bool RS_ResetPjState( int playerNum )", asFUNCTION(asFunc_RS_ResetPjState), NULL },
+	// !racesow
+
 	{ "Entity @G_SpawnEntity( const String &in )", asFUNCTION(asFunc_G_Spawn), NULL },
 	{ "const String @G_SpawnTempValue( const String &in )", asFUNCTION(asFunc_G_SpawnTempValue), NULL },
 	{ "Entity @G_GetEntity( int entNum )", asFUNCTION(asFunc_GetEntity), NULL },
