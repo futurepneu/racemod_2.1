@@ -40,7 +40,7 @@ void RS_Init( void )
 	rs_grenade_speed = trap_Cvar_Get( "rs_grenade_speed", "800", CVAR_ARCHIVE );
 	rs_grenade_timeout = trap_Cvar_Get( "rs_grenade_timeout", "1650", CVAR_ARCHIVE );
 	rs_grenade_gravity = trap_Cvar_Get( "rs_grenade_gravity", "1.22", CVAR_ARCHIVE );
-	rs_grenade_friction = trap_Cvar_Get( "rs_grenade_friction", "0.85", CVAR_ARCHIVE );
+	rs_grenade_friction = trap_Cvar_Get( "rs_grenade_friction", "1.25", CVAR_ARCHIVE );
 	rs_grenade_prestep = trap_Cvar_Get( "rs_grenade_prestep", "24", CVAR_ARCHIVE );
 	rs_grenade_splashfrac = trap_Cvar_Get( "rs_grenade_splashfrac", "2.5", CVAR_ARCHIVE );
 	rs_rocket_minKnockback = trap_Cvar_Get( "rs_rocket_minKnockback", "1", CVAR_ARCHIVE );

@@ -705,7 +705,7 @@ static void W_Touch_Grenade( edict_t *ent, edict_t *other, cplane_t *plane, int 
 			if( !g_grenade_friction )
 				g_grenade_friction = trap_Cvar_Get( "g_grenade_friction", "0.85", CVAR_DEVELOPER );
 
-			fric = bound( 0, rs_grenade_friction->value, 1 ); // racesow
+			fric = bound( 0, rs_grenade_friction->value, 2 ); // racesow
 			VectorScale( ent->velocity, fric, ent->velocity );
 			G_AddEvent( ent, EV_GRENADE_BOUNCE, ( ent->s.effects & EF_STRONG_WEAPON ) ? FIRE_MODE_STRONG : FIRE_MODE_WEAK, true );
 			return;
