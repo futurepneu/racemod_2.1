@@ -47,14 +47,14 @@ void RS_Init( void )
 	rs_rocket_maxKnockback = trap_Cvar_Get( "rs_rocket_maxKnockback", "108", CVAR_ARCHIVE );
 	rs_rocket_splash = trap_Cvar_Get( "rs_rocket_splash", "120", CVAR_ARCHIVE );
 	rs_rocket_speed = trap_Cvar_Get( "rs_rocket_speed", "950", CVAR_ARCHIVE );
-	rs_rocket_prestep = trap_Cvar_Get( "rs_rocket_prestep", "10", CVAR_ARCHIVE );
+	rs_rocket_prestep = trap_Cvar_Get( "rs_rocket_prestep", "0", CVAR_ARCHIVE );
 	rs_rocket_antilag = trap_Cvar_Get( "rs_rocket_antilag", "0", CVAR_ARCHIVE );
 	rs_rocket_splashfrac = trap_Cvar_Get( "rs_rocket_splashfrac", "1", CVAR_ARCHIVE );
 	rs_plasma_minKnockback = trap_Cvar_Get( "rs_plasma_minKnockback", "1", CVAR_ARCHIVE );
-	rs_plasma_maxKnockback = trap_Cvar_Get( "rs_plasma_maxKnockback", "23", CVAR_ARCHIVE );
+	rs_plasma_maxKnockback = trap_Cvar_Get( "rs_plasma_maxKnockback", "24", CVAR_ARCHIVE );
 	rs_plasma_splash = trap_Cvar_Get( "rs_plasma_splash", "40", CVAR_ARCHIVE );
 	rs_plasma_speed = trap_Cvar_Get( "rs_plasma_speed", "1700", CVAR_ARCHIVE );
-	rs_plasma_prestep = trap_Cvar_Get( "rs_plasma_prestep", "32", CVAR_ARCHIVE );
+	rs_plasma_prestep = trap_Cvar_Get( "rs_plasma_prestep", "0", CVAR_ARCHIVE );
 	rs_plasma_hack = trap_Cvar_Get( "rs_plasma_hack", "1", CVAR_ARCHIVE );
 	rs_plasma_splashfrac = trap_Cvar_Get( "rs_plasma_splashfrac", "1", CVAR_ARCHIVE );
 	rs_gunblade_minKnockback = trap_Cvar_Get( "rs_gunblade_minKnockback", "10", CVAR_ARCHIVE ); // TODO: decide gunblade values
